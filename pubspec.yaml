@@ -1,6 +1,6 @@
 name: smart_usb
 description: A cross-platform (Android/Windows/macOS/Linux) USB plugin for Flutter
-version: 0.4.0
+version: 0.4.1
 homepage: https://github.com/chuvanhoang888/smart_usb
 repository: https://github.com/chuvanhoang888/smart_usb
 
