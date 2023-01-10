@@ -7,11 +7,13 @@ A cross-platform (Android/Windows/macOS/Linux) USB plugin for Flutter
 - [List devices](#list-devices)
 - [List devices with additional description](#list-devices-with-additional-description)
 - [Get device description](#get-device-description)
+- [Connect device](#connect-device)
 - [Check permission](#check-permission)
 - [Request permission](#request-permission)
 - [Open/Close device](#openclose-device)
 - [Get/Set configuration](#getset-configuration)
 - [Claim/Release interface](#claimrelease-interface)
+- [Printer](#send)
 - [Bulk transfer in/out](#bulk-transfer-inout)
 - [Set auto detach kernel driver](#set-auto-detach-kernel-driver)
 
