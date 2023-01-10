@@ -1,3 +1,9 @@
+## 0.4.1
+
+- Add `connectDevice`
+- Add `send with Printer`
+- Change `permission BroadcastReceiver`
+
 ## 0.4.0
 
 - Fix `requestPermission` compatibility below Android 11
