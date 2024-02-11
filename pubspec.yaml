@@ -43,11 +43,14 @@ flutter:
       windows:
         pluginClass: SmartUsbPlugin
         dartPluginClass: SmartUsbWindows
+        ffiPlugin: true
       macos:
         dartPluginClass: SmartUsbMacos
+        ffiPlugin: true
       linux:
         pluginClass: SmartUsbPlugin
         dartPluginClass: SmartUsbLinux
+        ffiPlugin: true
     # -------------------
 
   # To add assets to your plugin package, add an assets section, like this:
