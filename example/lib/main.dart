@@ -20,14 +20,20 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SmartUsb.init();
-    _scan();
+    try {
+      SmartUsb.init().then((initialize) {
+        if (initialize) {
+          _scan();
+        }
+      });
+    } on Error catch (e) {
+      print(e.toString());
+    }
   }
 
   void _scan() async {
     _deviceList.clear();
-    var descriptions =
-        await SmartUsb.getDevicesWithDescription(requestPermission: false);
+    var descriptions = await SmartUsb.getDevicesWithDescription(requestPermission: false);
     print(descriptions);
     _deviceList = descriptions;
     setState(() {});
@@ -47,8 +53,7 @@ class _MyAppState extends State<MyApp> {
     // PaperSize.mm80 or PaperSize.mm58
     final generator = Generator(PaperSize.mm80, profile);
     bytes += generator.setGlobalCodeTable('CP1252');
-    bytes += generator.text('Test Print',
-        styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.text('Test Print', styles: const PosStyles(align: PosAlign.center));
     bytes += generator.cut();
     await SmartUsb.send(bytes);
   }
@@ -61,15 +66,13 @@ class _MyAppState extends State<MyApp> {
     // PaperSize.mm80 or PaperSize.mm58
     final generator = Generator(PaperSize.mm80, profile);
     bytes += generator.setGlobalCodeTable('CP1252');
-    bytes += generator.text('Test Print',
-        styles: const PosStyles(align: PosAlign.center));
+    bytes += generator.text('Test Print', styles: const PosStyles(align: PosAlign.center));
 
     _printEscPos(device, bytes, generator);
   }
 
   /// print ticket
-  void _printEscPos(
-      UsbDeviceDescription device, List<int> bytes, Generator generator) async {
+  void _printEscPos(UsbDeviceDescription device, List<int> bytes, Generator generator) async {
     //bytes += generator.feed(2);
     bytes += generator.cut();
     var isConnect = await SmartUsb.connectDevice(device.device);
@@ -114,8 +117,7 @@ class _MyAppState extends State<MyApp> {
                                   .map(
                                     (device) => ListTile(
                                       title: Text('${device.product}'),
-                                      subtitle:
-                                          Text("${device.device.vendorId}"),
+                                      subtitle: Text("${device.device.vendorId}"),
                                       onTap: () {
                                         // do something
                                       },
@@ -124,10 +126,8 @@ class _MyAppState extends State<MyApp> {
                                           _connectWithPrint(device);
                                         },
                                         child: const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 2, horizontal: 20),
-                                          child: Text("Print test ticket",
-                                              textAlign: TextAlign.center),
+                                          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                                          child: Text("Print test ticket", textAlign: TextAlign.center),
                                         ),
                                       ),
                                     ),
@@ -151,12 +151,10 @@ class _MyAppState extends State<MyApp> {
                                 children: _deviceList
                                     .map(
                                       (device) => Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text('${device.product}'),
                                               Text("${device.device.vendorId}"),
@@ -170,10 +168,8 @@ class _MyAppState extends State<MyApp> {
                                               connectDevice(device);
                                             },
                                             child: const Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 2, horizontal: 20),
-                                              child: Text("Connect Printer",
-                                                  textAlign: TextAlign.center),
+                                              padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                                              child: Text("Connect Printer", textAlign: TextAlign.center),
                                             ),
                                           ),
                                           const SizedBox(
@@ -184,10 +180,8 @@ class _MyAppState extends State<MyApp> {
                                               _printReceiveTest(device);
                                             },
                                             child: const Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 2, horizontal: 20),
-                                              child: Text("Print test ticket",
-                                                  textAlign: TextAlign.center),
+                                              padding: EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                                              child: Text("Print test ticket", textAlign: TextAlign.center),
                                             ),
                                           ),
                                         ],
